@@ -1,0 +1,345 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" standardController="c2g__codaInvoice__c" extensions="InvoiceController">
+    <apex:variable var="taxType" value="{!c2g__codaInvoice__c.c2g__OwnerCompany__r.RecordType.Name}"/>
+    <h2>
+    <span class="button back left" onclick="scrollToFirst();">
+        <span class="left"></span>
+        <span class="right">List</span>
+    </span>
+    <span class="title">Invoice</span> View
+    </h2>
+    <div class="content stretchBox" style="position:relative;top:0px;">
+        <div id="viewScroller">
+            <!-- START SECTION -->
+            <div id="accountDetail" class="section">
+                <h3>Account Detail</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Account</div>
+                        <div class="field fieldLink">
+                        	<span class="data">{!c2g__codaInvoice__c.c2g__Account__r.Name}</span> 
+                        	<span class="link"></span>
+                        	<a href="{!$Page.accountview}?id={!c2g__codaInvoice__c.c2g__Account__r.Id}" class="hidden link" onclick="return false;"></a>
+                        </div>
+                    </div>
+                    
+                   <!--  <div class="row">
+                        <div class="label">Dimension #1</div>
+                        <div class="field">{!c2g__codaInvoice__c.c2g__Dimension1__r.Name}</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="label">Dimension #2</div>
+                        <div class="field">{!c2g__codaInvoice__c.c2g__Dimension2__r.Name}</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="label">Dimension #3</div>
+                        <div class="field">{!c2g__codaInvoice__c.c2g__Dimension3__r.Name}</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="label">Dimension #4</div>
+                        <div class="field">{!c2g__codaInvoice__c.c2g__Dimension4__r.Name}</div>
+                    </div>
+                    
+                    <apex:outputPanel layout="none" rendered="{!taxType=='SUT'}">
+                        <div class="row">
+                            <div class="label">Tax Code</div>
+                            <div class="field">
+                                {!c2g__codaInvoice__c.c2g__TaxCode1__r.Name}<br/>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="label">Tax Code 2</div>
+                            <div class="field">
+                                {!c2g__codaInvoice__c.c2g__TaxCode2__r.Name}<br/>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="label">Tax Code 3</div>
+                            <div class="field">
+                                {!c2g__codaInvoice__c.c2g__TaxCode3__r.Name}<br/>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                     -->
+                    
+                    <div class="row">
+                        <div class="label">Opportunity</div>
+                        
+                        <apex:outputPanel layout="none" rendered="{!c2g__codaInvoice__c.c2g__Opportunity__r.Name!=''}">
+                        <div class="field fieldLink">
+                        	<span class="data">{!c2g__codaInvoice__c.c2g__Opportunity__r.Name}</span> 
+                        	<span class="link"></span>
+                        	<a href="{!$Page.opportunityview}?id={!c2g__codaInvoice__c.c2g__Opportunity__r.Id}" class="hidden link" onclick="return false;"></a>
+                        </div>
+                        </apex:outputPanel>
+                        
+                    </div>
+                    
+                    <div class="row">
+                        <div class="label">Billing Address</div>
+                        <div class="field">
+                            <apex:outputText rendered="{!c2g__codaInvoice__c.c2g__Account__r.BillingStreet!=''}" escape="false">{!c2g__codaInvoice__c.c2g__Account__r.BillingStreet}<br/></apex:outputText>
+                            <apex:outputText rendered="{!c2g__codaInvoice__c.c2g__Account__r.BillingCity!=''}" escape="false">{!c2g__codaInvoice__c.c2g__Account__r.BillingCity}<br/></apex:outputText>
+                            <apex:outputText rendered="{!c2g__codaInvoice__c.c2g__Account__r.BillingState!=''}" escape="false">{!c2g__codaInvoice__c.c2g__Account__r.BillingState}<br/></apex:outputText>
+                            <apex:outputText rendered="{!c2g__codaInvoice__c.c2g__Account__r.BillingPostalCode!=''}" escape="false">{!c2g__codaInvoice__c.c2g__Account__r.BillingPostalCode}<br/></apex:outputText>
+                            <apex:outputText rendered="{!c2g__codaInvoice__c.c2g__Account__r.BillingCountry!=''}" escape="false">{!c2g__codaInvoice__c.c2g__Account__r.BillingCountry}<br/></apex:outputText>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="label">Shipping Address</div>
+                        <div class="field">
+                            <apex:outputText rendered="{!c2g__codaInvoice__c.c2g__Account__r.ShippingStreet!=''}" escape="false">{!c2g__codaInvoice__c.c2g__Account__r.ShippingStreet}<br/></apex:outputText>
+                            <apex:outputText rendered="{!c2g__codaInvoice__c.c2g__Account__r.ShippingCity!=''}" escape="false">{!c2g__codaInvoice__c.c2g__Account__r.ShippingCity}<br/></apex:outputText>
+                            <apex:outputText rendered="{!c2g__codaInvoice__c.c2g__Account__r.ShippingState!=''}" escape="false">{!c2g__codaInvoice__c.c2g__Account__r.ShippingState}<br/></apex:outputText>
+                            <apex:outputText rendered="{!c2g__codaInvoice__c.c2g__Account__r.ShippingPostalCode!=''}" escape="false">{!c2g__codaInvoice__c.c2g__Account__r.ShippingPostalCode}<br/></apex:outputText>
+                            <apex:outputText rendered="{!c2g__codaInvoice__c.c2g__Account__r.ShippingCountry!=''}" escape="false">{!c2g__codaInvoice__c.c2g__Account__r.ShippingCountry}<br/></apex:outputText>
+                        </div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>  
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="invoiceDetail" class="section">
+                <h3>Invoice Detail</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Company</div>
+                        <div class="field">{!c2g__codaInvoice__c.c2g__OwnerCompany__r.Name}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Invoice Group</div>
+                        <div class="field">{!c2g__codaInvoice__c.c2g__InvoiceGroup__r.Name}</div>
+                    </div>
+                    <!-- 
+                    <div class="row">
+                        <div class="label">Transaction</div>
+                        <div class="field">{!c2g__codaInvoice__c.c2g__Transaction__r.Name}</div>
+                    </div>
+                     -->
+                    <div class="row">
+                        <div class="label">Invoice Number</div>
+                        <div class="field">{!c2g__codaInvoice__c.Name}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Customer Reference</div>
+                        <div class="field">{!c2g__codaInvoice__c.c2g__CustomerReference__c}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Invoice Date</div>
+                        <div class="field">
+                            <apex:outputField value="{!c2g__codaInvoice__c.c2g__InvoiceDate__c}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Period</div>
+                        <div class="field">{!c2g__codaInvoice__c.c2g__Period__r.Name}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Due Date</div>
+                        <div class="field">
+	                        <apex:outputField value="{!c2g__codaInvoice__c.c2g__DueDate__c}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Shipping Method</div>
+                        <div class="field">{!c2g__codaInvoice__c.c2g__ShippingMethod__c}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Invoice Currency</div>
+                        <div class="field">{!c2g__codaInvoice__c.c2g__InvoiceCurrency__r.Name}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Invoice Description</div>
+                        <div class="field"><apex:outputField value="{!c2g__codaInvoice__c.c2g__InvoiceDescription__c}"/></div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="invoiceLineItems" class="section">
+                <h3>Invoice Line Items</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    
+                    
+                    <apex:outputPanel layout="none" rendered="{!!HasLineItems}">
+           				<div class="row">
+           					<div class="fieldCenter">{!$Label.NoRecordsToDisplay}</div>
+           				</div>
+           			</apex:outputPanel>
+                    
+                    <apex:outputPanel layout="none" rendered="{!HasLineItems}">
+	                    <table class="list">
+	                        <colgroup>
+	                            <col width=""></col>
+	                            <col width="8%"></col>
+	                            <col width="15%"></col>
+	                            <!-- <col width="15%"></col>-->
+	                            <col width="15%"></col>
+	                            <col width="15%"></col>
+	                            <!-- <col width="40"></col> -->
+	                        </colgroup>
+	                        <thead>
+	                            <tr>
+	                                <th class="alignLeft">Product</th>
+	                                <th class="alignCenter">Qty.</th>
+	                                <th class="alignRight">Unit Price</th>
+	                                <!-- <th class="alignLeft">Tax Code</th>-->
+	                                <th class="alignCenter">Tax Details</th>
+	                                <th class="alignRight">Net Value</th>
+	                                <!-- <th class="alignCenter">&nbsp;</th>-->
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+	                            <apex:repeat id="lineItems" value="{!c2g__codaInvoice__c.c2g__InvoiceLineItems__r}" var="li" >
+	                            <tr>
+	                                <td class="alignLeft">{!li.c2g__Product__r.Name}<br/><span class="sub">Product Code: {!li.c2g__Product__r.ProductCode}</span></td>
+	                                <td class="alignRight">
+	                                    <apex:outputText value="{0,number,#,###,###,###,###,##0.00}">
+	                                        <apex:param value="{!li.c2g__Quantity__c}"/>
+	                                    </apex:outputText>
+	                                </td>
+	                                <td class="alignRight">
+	                                    {!c2g__codaInvoice__c.c2g__InvoiceCurrency__r.Name}&nbsp;<apex:outputField value="{!li.c2g__UnitPrice__c}"/>
+	                                </td>
+	                                <!-- <td class="alignLeft">{!li.c2g__Product__r.c2g__CodaTaxCode__r.Name}</td>-->
+	                                <td class="alignRight noWrap">
+	                                    <span class="sub floatLeft">Tax Code: {!li.c2g__Product__r.c2g__CodaTaxCode__r.Name}</span>
+	                                    {!c2g__codaInvoice__c.c2g__InvoiceCurrency__r.Name}&nbsp;<apex:outputField value="{!li.c2g__TaxValue1__c}"/>
+	                                </td>
+	                                <td class="alignRight">
+	                                    {!c2g__codaInvoice__c.c2g__InvoiceCurrency__r.Name}&nbsp;<apex:outputField value="{!li.c2g__NetValue__c}"/>
+	                                </td>
+	                            </tr>
+	                            </apex:repeat>
+	                        </tbody>
+	                    </table>
+                    </apex:outputPanel>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="invoiceSummary" class="section">
+                <h3>Summary</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <table class="list listSmall">
+                        <colgroup>
+                            <col width=""></col>
+                            <col width="15%"></col>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td class="alignRight">Net Total</td>
+                                <td class="alignRight total">
+                                    {!c2g__codaInvoice__c.c2g__InvoiceCurrency__r.Name}&nbsp;<apex:outputField value="{!c2g__codaInvoice__c.c2g__NetTotal__c}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="alignRight">Tax Total</td>
+                                <td class="alignRight total">
+                                    {!c2g__codaInvoice__c.c2g__InvoiceCurrency__r.Name}&nbsp;<apex:outputField value="{!c2g__codaInvoice__c.c2g__TaxTotal__c}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="alignRight">Invoice Total</td>
+                                <td class="alignRight total totalFinal">
+                                    {!c2g__codaInvoice__c.c2g__InvoiceCurrency__r.Name}&nbsp;<apex:outputField value="{!c2g__codaInvoice__c.c2g__InvoiceTotal__c}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="invoiceStatus" class="section">
+                <h3>Invoice Status</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Status</div>
+                        <div class="field">{!c2g__codaInvoice__c.c2g__PaymentStatus__c}</div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            
+            <!-- START SECTION -->
+            <div id="activityHistory" class="section">
+                <h3>Activity History</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    
+                    <apex:outputPanel layout="none" rendered="{!!HasActivityHistories}">
+           				<div class="row">
+           					<div class="fieldCenter">{!$Label.NoRecordsToDisplay}</div>
+           				</div>
+           			</apex:outputPanel>
+                    
+                    <apex:outputPanel layout="none" rendered="{!HasActivityHistories}">
+	                    <table class="list fixed">
+	                        <colgroup>
+	                            <col width="15px"></col>
+	                            <col width=""></col>
+	                            <col width="150px"></col>
+	                            <col width="80px"></col>
+	                            <col width="120px"></col>
+	                            <col width="70px"></col>
+	                        </colgroup>
+	                        <thead>
+	                            <tr>
+	                                <th class="alignCenter">&nbsp;</th>
+	                                <th class="alignLeft">Subject</th>
+	                                <th class="alignLeft">Name</th>
+	                                <th class="alignCenter">Task</th>
+	                                <th class="alignLeft">Due Date</th>
+	                                <th class="alignCenter">&nbsp;</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+		                        <apex:repeat value="{!c2g__codaInvoice__c.ActivityHistories}" var="ah">
+			            			<tr>
+			            				<td class="alignCenter status status{!ah.Priority}">&nbsp;</td>
+			            				<td class="alignLeft">{!ah.Subject}</td>
+			            				<td class="alignLeft">{!ah.Who.Name}</td>
+			            				<td class="alignCenter"><apex:outputPanel layout="none" rendered="{!ah.IsTask}"><span class="tick"></span></apex:outputPanel></td>
+			            				<td class="alignLeft"><apex:outputField value="{!ah.ActivityDate}"/></td>
+			            				<td class="alignCenter"><apex:outputPanel layout="none" rendered="{!ah.IsTask}"><span class="link">&nbsp;</span><a href="{!$Page.taskview}?id={!ah.Id}" class="hidden link" onclick="return false;"></a></apex:outputPanel></td>
+			            			</tr>
+		            			</apex:repeat>
+		                    </tbody>
+						</table>
+					</apex:outputPanel>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            
+        </div>
+    </div>
+</apex:page>

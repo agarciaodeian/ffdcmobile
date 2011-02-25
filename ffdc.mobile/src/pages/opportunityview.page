@@ -1,0 +1,258 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" standardController="Opportunity" extensions="OpportunityController">
+    <h2>
+    	<span class="button back left" onclick="scrollToFirst();">
+	        <span class="left"></span>
+	        <span class="right">List</span>
+	    </span>
+	    
+	    <span class="button right" onclick="buttonLoadingOn(this);createOverlay();loadEdit('{!$Page.opportunityedit}?id={!Opportunity.Id}');">
+	        <span class="left"></span>
+	        <span class="right">Edit</span>
+	    </span>
+	 	
+	 	<span class="title">Opportunity</span> View
+	</h2>
+    
+    <div class="content stretchBox" style="position:relative;">
+        <div id="viewScroller">
+            <!-- START SECTION -->
+            <div id="accountDetail" class="section first">
+                <h3>Opportunity Detail</h3>
+                <div class="headerArrow"></div>
+            
+                <!-- Start Fields -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Opportunity Name</div>
+                        <div class="field">{!Opportunity.Name}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Account Name</div>
+                        <div class="field fieldLink">
+                        	<span class="data">{!Opportunity.Account.Name}</span> 
+                        	<span class="link"></span>
+                        	<a href="{!$Page.accountview}?id={!Opportunity.Account.Id}" class="hidden link" onclick="return false;"></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Type</div>
+                        <div class="field">{!Opportunity.Type}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Close Date</div>
+                        <div class="field"><apex:outputField value="{!Opportunity.CloseDate}"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Stage</div>
+                        <div class="field">{!Opportunity.StageName}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Probability</div>
+                        <div class="field"><apex:outputText value="{0,number,##0.00}%"><apex:param value="{!Opportunity.Probability}"/></apex:outputText></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Amount</div>
+                        <div class="field"><apex:outputField value="{!Opportunity.Amount}"/></div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="additionalInformation" class="section">
+                <h3>Additional Information</h3>
+                <div class="headerArrow"></div>
+                <!-- Start Fields -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Lead Source</div>
+                        <div class="field">{!Opportunity.LeadSource}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Next Step</div>
+                        <div class="field">{!Opportunity.NextStep}</div>
+                    </div>
+                    
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="description" class="section">
+                <h3>Description</h3>
+                <div class="headerArrow"></div>
+                <!-- Start Fields -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Description</div>
+                        <div class="field"><apex:outputField value="{!Opportunity.Description}"/></div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            
+            
+            <!-- START SECTION -->
+            <div id="invoices" class="section">
+                <h3>Invoices</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    
+                	<apex:outputPanel layout="none" rendered="{!!HasInvoices}">
+           				<div class="row">
+           					<div class="fieldCenter">{!$Label.NoRecordsToDisplay}</div>
+           				</div>
+           			</apex:outputPanel>
+                	
+                	<apex:outputPanel layout="none" rendered="{!HasInvoices}">
+	                    <table class="list fixed">
+	                        <colgroup>
+	                            <col width=""></col>
+	                           <col width="150px"></col>
+	                            <col width="120px"></col>
+	                            <col width="70px"></col>
+	                        </colgroup>
+	                        <thead>
+	                            <tr>
+	                                <th class="alignLeft">Name</th>
+	                                <th class="alignLeft">Due Date</th>
+	                                <th class="alignRight">Amount</th>
+	                                <th class="alignCenter">&nbsp;</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+		                        <apex:repeat value="{!Opportunity.c2g__Invoices__r}" var="i">
+			            			<tr>
+			            				<td class="alignLeft">{!i.Name}</td>
+			            				<td class="alignLeft">
+			            					<apex:outputField value="{!i.c2g__DueDate__c}"/>
+	                            		</td>
+			            				<td class="alignRight">
+			            					<apex:outputText value="{0,number,#,###,###,###,###,##0.00}">
+		                    					<apex:param value="{!i.c2g__InvoiceTotal__c}"/>
+		                    				</apex:outputText>
+		                    			</td>
+			            				<td class="alignCenter"><span class="link">&nbsp;</span><a href="{!$Page.invoiceview}?id={!i.Id}" class="hidden link" onclick="return false;"></a></td>
+			            			</tr>
+		            			</apex:repeat>
+		                    </tbody>
+						</table>
+					</apex:outputPanel>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            
+            
+            
+            <!-- START SECTION -->
+            <div id="activityHistory" class="section">
+                <h3>Activity History</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    
+                    <apex:outputPanel layout="none" rendered="{!!HasActivityHistories}">
+           				<div class="row">
+           					<div class="fieldCenter">{!$Label.NoRecordsToDisplay}</div>
+           				</div>
+           			</apex:outputPanel>
+           			
+	            	<apex:outputPanel layout="none" rendered="{!HasActivityHistories}">		
+	                    <table class="list fixed">
+	                        <colgroup>
+	                            <col width="15px"></col>
+	                            <col width=""></col>
+	                            <col width="150px"></col>
+	                            <col width="80px"></col>
+	                            <col width="120px"></col>
+	                            <col width="70px"></col>
+	                        </colgroup>
+	                        <thead>
+	                            <tr>
+	                                <th class="alignCenter">&nbsp;</th>
+	                                <th class="alignLeft">Subject</th>
+	                                <th class="alignLeft">Name</th>
+	                                <th class="alignCenter">Task</th>
+	                                <th class="alignLeft">Due Date</th>
+	                                <th class="alignCenter">&nbsp;</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+		                        <apex:repeat value="{!Opportunity.ActivityHistories}" var="ah">
+			            			<tr>
+			            				<td class="alignCenter status status{!ah.Priority}">&nbsp;</td>
+			            				<td class="alignLeft">{!ah.Subject}</td>
+			            				<td class="alignLeft">{!ah.Who.Name}</td>
+			            				<td class="alignCenter"><apex:outputPanel layout="none" rendered="{!ah.IsTask}"><span class="tick"></span></apex:outputPanel></td>
+			            				<td class="alignLeft"><apex:outputField value="{!ah.ActivityDate}"/></td>
+			            				<td class="alignCenter"><apex:outputPanel layout="none" rendered="{!ah.IsTask}"><span class="link">&nbsp;</span><a href="{!$Page.taskview}?id={!ah.Id}" class="hidden link" onclick="return false;"></a></apex:outputPanel></td>
+			            			</tr>
+		            			</apex:repeat>
+		                    </tbody>
+						</table>
+					</apex:outputPanel>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="stageHistory" class="section">
+                <h3>Stage History</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                	
+                	<apex:outputPanel layout="none" rendered="{!!HasOpportunityHistories}">
+           				<div class="row">
+           					<div class="fieldCenter">{!$Label.NoRecordsToDisplay}</div>
+           				</div>
+           			</apex:outputPanel>
+                
+                	<apex:outputPanel layout="none" rendered="{!HasOpportunityHistories}">
+	                    <table class="list fixed noLinks">
+	                        <colgroup>
+	                            <col width=""></col>
+	                            <col width="170px"></col>
+	                            <col width="110px"></col>
+	                            <col width="170px"></col>
+	                            <col width="115px"></col>
+	                        </colgroup>
+	                        <thead>
+	                            <tr>
+	                                <th class="alignLeft">Stage</th>
+	                                <th class="alignRight">Amount</th>
+	                                <th class="alignRight">Probability</th>
+	                                <th class="alignRight">Expected Revenue</th>
+	                                <th class="alignLeft">Close Date</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+	
+		                        <apex:repeat value="{!Opportunity.OpportunityHistories}" var="sh">
+			            			<tr>
+			            				<td class="alignLeft">{!sh.StageName}</td>
+			            				<td class="alignRight"><apex:outputField value="{!sh.Amount}"/></td>
+			            				<td class="alignRight"><apex:outputField value="{!sh.Probability}"/></td>
+			            				<td class="alignRight"><apex:outputField value="{!sh.ExpectedRevenue}"/></td>
+			            				<td class="alignLeft"><apex:outputField value="{!sh.CloseDate}"/></td>
+			            			</tr>
+		            			</apex:repeat>
+		                    </tbody>
+						</table>
+					</apex:outputPanel>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+        </div>
+    </div>
+</apex:page>
