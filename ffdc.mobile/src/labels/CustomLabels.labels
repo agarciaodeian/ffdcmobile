@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>AccountBalanceTotal</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountBalanceTotal</shortDescription>
+        <value>Total</value>
+    </labels>
+    <labels>
+        <fullName>ApplicationName</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Application Name</shortDescription>
+        <value>FinancialForce Mobile</value>
+    </labels>
+    <labels>
+        <fullName>NavigationRoot</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Navigation Root</shortDescription>
+        <value>Navigation</value>
+    </labels>
+    <labels>
+        <fullName>NoRecordsToDisplay</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No Records To Display</shortDescription>
+        <value>No records to display</value>
+    </labels>
+    <labels>
+        <fullName>ObjectAccounts</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Object Accounts</shortDescription>
+        <value>Accounts</value>
+    </labels>
+    <labels>
+        <fullName>ObjectInvoices</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Object Invoices</shortDescription>
+        <value>Invoices</value>
+    </labels>
+    <labels>
+        <fullName>ObjectOpportunities</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Object Opportunities</shortDescription>
+        <value>Opportunities</value>
+    </labels>
+    <labels>
+        <fullName>ObjectTasks</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Object Tasks</shortDescription>
+        <value>Tasks</value>
+    </labels>
+    <labels>
+        <fullName>Objects</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Objects</shortDescription>
+        <value>Objects</value>
+    </labels>
+    <labels>
+        <fullName>SearchResultsNone</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Results None</shortDescription>
+        <value>No records to display. Please refine using the Search above</value>
+    </labels>
+    <labels>
+        <fullName>SearchResultsTooMany</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Results Too Many</shortDescription>
+        <value>More than 250 records exist. Please refine using the Search above</value>
+    </labels>
+    <labels>
+        <fullName>TabAccounts</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tab Accounts</shortDescription>
+        <value>#Accounts</value>
+    </labels>
+    <labels>
+        <fullName>TabInvoices</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tab Invoices</shortDescription>
+        <value>Invoices</value>
+    </labels>
+    <labels>
+        <fullName>TabOpportunities</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tab Opportunities</shortDescription>
+        <value>Opportunities</value>
+    </labels>
+    <labels>
+        <fullName>TabTasks</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tab Tasks</shortDescription>
+        <value>Tasks</value>
+    </labels>
+    <labels>
+        <fullName>Tabs</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tabs</shortDescription>
+        <value>Tabs</value>
+    </labels>
+    <labels>
+        <fullName>WelcomeSubTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Welcome Sub Title</shortDescription>
+        <value>Giving you a 360° view of your customers</value>
+    </labels>
+    <labels>
+        <fullName>WelcomeTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Welcome Title</shortDescription>
+        <value>Welcome to FinancialForce Mobile</value>
+    </labels>
+    <labels>
+        <fullName>WelcomeVersion</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Welcome Version</shortDescription>
+        <value>FinancialForce Mobile (1.0)</value>
+    </labels>
+</CustomLabels>

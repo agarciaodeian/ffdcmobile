@@ -1,0 +1,66 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" controller="ListController">
+<h2>
+<div class="searchWrapper">
+    <div class="search"></div>
+    <input type="text" name="s" id="s" size="15" placeholder="Search Tasks by Subject, Status or Priority" onKeyUp="loadResults('{!$Page.tasksearchresults}?s='+this.value,this);"/>
+    <div class="reset" onclick="loadResults('{!$Page.tasksearchresults}',document.getElementById('s'));document.getElementById('s').value='';"></div>
+</div>
+</h2>
+<table class="list fixed">
+    <colgroup>
+        <col width="15px"></col>
+        <col width="120px"></col>
+        <col></col>
+        <col width="200px"></col>
+        <col width="70px"></col>
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="alignCenter">&nbsp;</th>
+            <th class="alignLeft">Due Date</th>
+            <th class="alignLeft">Subject</th>
+            <th class="alignLeft">Status</th>
+            <th class="alignCenter">&nbsp;</th>
+        </tr>
+    </thead>
+</table>
+
+<div class="content stretchBox">
+    <div id="tableScroller" class="stretchBox">
+	<table class="list fixed taskTable">
+	    <colgroup>
+	        <col width="15px"></col>
+	        <col width="120px"></col>
+	        <col></col>
+	        <col width="200px"></col>
+	        <col width="70px"></col>
+	    </colgroup>
+	    <tbody>
+	        <apex:repeat id="taskList" value="{!tasks}" var="t" rows="250">
+	        <tr>
+	            <td class="alignCenter status status{!t.Priority}">&nbsp;</td>
+	            <td class="alignLeft">
+	            	<apex:outputText value="{0,date,MM/dd/yyyy}">
+	                    <apex:param value="{!t.ActivityDate}"/>
+	                </apex:outputText></td>
+	            <td class="alignLeft">{!t.Subject}</td>
+	            <td class="alignLeft">{!t.Status}</td>
+	            <td class="alignCenter"><span class="link"></span><a href="{!$Page.taskview}?id={!t.Id}" class="link hidden"></a></td>
+	        </tr>
+	        </apex:repeat>
+	        <apex:outputPanel layout="none" rendered="{!IF(size == 0, true, false)}">
+	        <tr>
+	            <td colspan="5" class="alignCenter">{!$Label.SearchResultsNone}</td>
+	        </tr>
+	        </apex:outputPanel>
+	        <apex:outputPanel layout="none" rendered="{!IF(size > 250, true, false)}">
+	        <tr>
+	            <td colspan="5" class="alignCenter">{!$Label.SearchResultsTooMany}</td>
+	        </tr>
+	        </apex:outputPanel>
+	    </tbody>
+	</table>
+    </div>
+</div>
+
+</apex:page>

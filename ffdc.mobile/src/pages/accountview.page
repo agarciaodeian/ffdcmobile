@@ -1,0 +1,429 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" standardController="Account" extensions="AccountController">
+    <h2><span class="button back left" onclick="scrollToFirst();">
+        <span class="left"></span>
+        <span class="right">List</span>
+    </span>
+    <span class="title">Account</span> View
+    </h2>
+    <div class="content stretchBox" style="position:relative;top:0px;">
+        <div id="viewScroller">
+            <!-- START SECTION -->
+            <div id="accountDetail" class="section">
+                <h3>Account Detail</h3>
+                <div class="headerArrow"></div>
+                <!-- Start Fields -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Account Name</div>
+                        <div class="field">{!Account.Name}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Phone</div>
+                        <div class="field">{!Account.Phone}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Fax</div>
+                        <div class="field">{!Account.Fax}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Website</div>
+                        <div class="field">{!Account.Website}</div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="additionalInfo" class="section">
+                <h3>Additional information</h3>
+                <div class="headerArrow"></div>
+                <!-- Start Fields -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Type</div>
+                        <div class="field">{!Account.Type}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Number of Employees</div>
+                        <div class="field">{!Account.NumberOfEmployees}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Industry</div>
+                        <div class="field">{!Account.Industry}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Annual Revenue</div>
+                        <div class="field">
+                                <apex:outputField value="{!Account.AnnualRevenue}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Description</div>
+                        <div class="field"><apex:outputField value="{!Account.Description}"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Financial Contact</div>
+                        <div class="field"><apex:outputField value="{!Account.c2g__codaFinanceContact__r.Name}"/></div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="addressInformation" class="section">
+                <h3>Address Information</h3>
+                <div class="headerArrow"></div>
+                <!-- Start Fields -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Billing Address</div>
+                        <div class="field">
+                            <apex:outputText rendered="{!Account.BillingStreet!=''}" escape="false">{!Account.BillingStreet}<br/></apex:outputText>
+                            <apex:outputText rendered="{!Account.BillingCity!=''}" escape="false">{!Account.BillingCity}<br/></apex:outputText>
+                            <apex:outputText rendered="{!Account.BillingState!=''}" escape="false">{!Account.BillingState}<br/></apex:outputText>
+                            <apex:outputText rendered="{!Account.BillingPostalCode!=''}" escape="false">{!Account.BillingPostalCode}<br/></apex:outputText>
+                            <apex:outputText rendered="{!Account.BillingCountry!=''}" escape="false">{!Account.BillingCountry}<br/></apex:outputText>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Shipping Address</div>
+                        <div class="field">
+                            <apex:outputText rendered="{!Account.ShippingStreet!=''}" escape="false">{!Account.ShippingStreet}<br/></apex:outputText>
+                            <apex:outputText rendered="{!Account.ShippingCity!=''}" escape="false">{!Account.ShippingCity}<br/></apex:outputText>
+                            <apex:outputText rendered="{!Account.ShippingState!=''}" escape="false">{!Account.ShippingState}<br/></apex:outputText>
+                            <apex:outputText rendered="{!Account.ShippingPostalCode!=''}" escape="false">{!Account.ShippingPostalCode}<br/></apex:outputText>
+                            <apex:outputText rendered="{!Account.ShippingCountry!=''}" escape="false">{!Account.ShippingCountry}<br/></apex:outputText>
+                        </div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="creditInformation" class="section">
+                <h3>Credit Management Info.</h3>
+                <div class="headerArrow"></div>
+                <!-- Start Fields -->
+                <div class="fields">
+                    
+                    <div class="row">
+                        <div class="label">Credit Status</div>
+                        <div class="field">{!Account.c2g__CodaCreditStatus__c}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Credit Limit</div>
+                        <div class="field">{!CurrencyIsoCode}&nbsp;<apex:outputField value="{!Account.c2g__CODACreditLimit__c}"/></div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            
+            <!-- START SECTION -->
+            <div id="accountBalance" class="section">
+                <h3>Account Balance</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <apex:outputPanel layout="none" rendered="{!!HasAccountBalances}">
+           				<div class="row">
+           					<div class="fieldCenter">{!$Label.NoRecordsToDisplay}</div>
+           				</div>
+           			</apex:outputPanel>
+                
+                	<apex:outputPanel layout="none" rendered="{!HasAccountBalances}">
+	                    <table class="list fixed">
+	                        <colgroup>
+	                            <col></col>
+	                            <col width="180px"></col>
+	                        </colgroup>
+	                        <thead>
+	                            <tr>
+	                                <th class="alignLeft">Company</th>
+	                                <th class="alignRight">Balance</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+		                        <apex:repeat value="{!AccountBalances}" var="AccountBalance">
+			            			<tr>
+			            				<td class="alignLeft">{!AccountBalance.Company}</td>
+			            				<td class="alignRight">{!AccountBalance.CurrencyIsoCode}&nbsp;<apex:outputField value="{!AccountBalance.dto.c2g__AccountOutstandingValue__c}"/></td>
+			            			</tr>
+		            			</apex:repeat>
+								<apex:outputPanel layout="none" rendered="{!HasTotalAccountBalance}">
+			            			<tr>
+			            				<td class="alignRight">{!TotalAccountBalance.Company}</td>
+			            				<td class="alignRight total totalFinal">{!TotalAccountBalance.CurrencyIsoCode}&nbsp;<apex:outputField value="{!TotalAccountBalance.dto.c2g__AccountOutstandingValue__c}"/></td>
+			            			</tr>
+			            		</apex:outputPanel>
+		                    </tbody>
+						</table>
+					</apex:outputPanel>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="contacts" class="section">
+                <h3>Contacts</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    
+                    <apex:outputPanel layout="none" rendered="{!!HasContacts}">
+           				<div class="row">
+           					<div class="fieldCenter">{!$Label.NoRecordsToDisplay}</div>
+           				</div>
+           			</apex:outputPanel>
+                	
+                	<apex:outputPanel layout="none" rendered="{!HasContacts}">
+	                    <table class="list fixed">
+	                        <colgroup>
+	                            <col width=""></col>
+	                            <col width=""></col>
+	                            <col width=""></col>
+	                            <col width=""></col>
+	                        </colgroup>
+	                        <thead>
+	                            <tr>
+	                                <th class="alignLeft">Name</th>
+	                                <th class="alignLeft">Title</th>
+	                                <th class="alignLeft">Email</th>
+	                                <th class="alignLeft">Phone</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+		                        <apex:repeat value="{!Account.Contacts}" var="c">
+			            			<tr>
+			            				<td class="alignLeft">{!c.Name}</td>
+			            				<td class="alignLeft">{!c.Title}</td>
+			            				<td class="alignLeft">{!c.Email}</td>
+			            				<td class="alignLeft">{!c.Phone}</td>
+			            			</tr>
+		            			</apex:repeat>
+		                    </tbody>
+						</table>
+					</apex:outputPanel>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="opportunites" class="section">
+                <h3>Opportunities</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    
+                    <apex:outputPanel layout="none" rendered="{!!HasOpportunities}">
+           				<div class="row">
+           					<div class="fieldCenter">{!$Label.NoRecordsToDisplay}</div>
+           				</div>
+           			</apex:outputPanel>
+                
+                	<apex:outputPanel layout="none" rendered="{!HasOpportunities}">
+                    
+	                    <table class="list fixed">
+	                        <colgroup>
+	                            <col width=""></col>
+	                            <!-- <col width=""></col>  -->
+	                            <col width="170px"></col>
+	                            <col width="120px"></col>
+	                            <col width="70px"></col>
+	                        </colgroup>
+	                        <thead>
+	                            <tr>
+	                                <th class="alignLeft">Name</th>
+	                                <!-- <th class="alignLeft">Stage</th> -->
+	                                <th class="alignRight">Amount</th>
+	                                <th class="alignLeft">Close Date</th>
+	                                <th class="alignCenter">&nbsp;</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+		                        <apex:repeat value="{!Account.Opportunities}" var="o">
+			            			<tr>
+			            				<td class="alignLeft">{!o.Name}<span class="sub">Stage Name: {!o.StageName}</span></td>
+			            				<!-- <td class="alignLeft">{!o.StageName}</td> -->
+			            				<td class="alignRight"><apex:outputField value="{!o.Amount}"/></td>
+			            				<td class="alignLeft"><apex:outputField value="{!o.CloseDate}"/></td>
+			            				<td class="alignCenter"><span class="link">&nbsp;</span><a href="{!$Page.opportunityview}?id={!o.Id}" class="hidden link" onclick="return false;"></a></td>
+			            			</tr>
+		            			</apex:repeat>
+		                    </tbody>
+						</table>
+					</apex:outputPanel>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            
+            <!-- START SECTION -->
+            <div id="cashEntries" class="section">
+                <h3>Cash Entries</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <apex:outputPanel layout="none" rendered="{!!HasCashEntries}">
+           				<div class="row">
+           					<div class="fieldCenter">{!$Label.NoRecordsToDisplay}</div>
+           				</div>
+           			</apex:outputPanel>
+                 
+                	<apex:outputPanel layout="none" rendered="{!HasCashEntries}">
+	                    <table class="list fixed">
+	                        <colgroup>
+	                            <col></col>
+	                            <col width="150px"></col>
+	                            <col width="170px"></col>
+	                            <col width="250px"></col>
+	                        </colgroup>
+	                        <thead>
+	                            <tr>
+	                                <th class="alignLeft">Date</th>
+	                                <th class="alignLeft">Payment Currency</th>
+	                                <th class="alignRight">Payment Value</th>
+	                                <th class="alignLeft">Company</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+		                        <apex:repeat value="{!Account.c2g__CashEntries__r}" var="ce">
+			            			<tr>
+			            				<td class="alignLeft">
+			            					<apex:outputField value="{!ce.c2g__Date__c}"/>
+	                            		</td>
+	                            		<td class="alignLeft">{!ce.c2g__CashEntryCurrency__r.Name}</td>
+			            				<td class="alignRight">
+			            					<apex:outputField value="{!ce.c2g__NetBanked__c}"/>
+		                    			</td>
+			            				<td class="alignLeft">{!ce.c2g__OwnerCompany__r.Name}</td>
+			            			</tr>
+		            			</apex:repeat>
+		                    </tbody>
+						</table>
+					</apex:outputPanel>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            
+            
+            <!-- START SECTION -->
+            <div id="invoices" class="section">
+                <h3>Invoices</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <apex:outputPanel layout="none" rendered="{!!HasSalesInvoices}">
+           				<div class="row">
+           					<div class="fieldCenter">{!$Label.NoRecordsToDisplay}</div>
+           				</div>
+           			</apex:outputPanel>
+                
+                	<apex:outputPanel layout="none" rendered="{!HasSalesInvoices}">
+	                    <table class="list fixed">
+	                        <colgroup>
+	                            <col width=""></col>
+	                           <col width="150px"></col>
+	                            <col width="170px"></col>
+	                            <col width="70px"></col>
+	                        </colgroup>
+	                        <thead>
+	                            <tr>
+	                                <th class="alignLeft">Name</th>
+	                                <th class="alignLeft">Due Date</th>
+	                                <th class="alignRight">Amount</th>
+	                                <th class="alignCenter">&nbsp;</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+		                        <apex:repeat value="{!Account.c2g__Invoices__r}" var="i">
+			            			<tr>
+			            				<td class="alignLeft">{!i.Name}</td>
+			            				<td class="alignLeft">
+			            					<apex:outputField value="{!i.c2g__DueDate__c}"/>
+	                            		</td>
+			            				<td class="alignRight">
+			            					{!i.c2g__InvoiceCurrency__r.Name}&nbsp;<apex:outputField value="{!i.c2g__InvoiceTotal__c}"/>
+		                    			</td>
+			            				<td class="alignCenter"><span class="link">&nbsp;</span><a href="{!$Page.invoiceview}?id={!i.Id}" class="hidden link" onclick="return false;"></a></td>
+			            			</tr>
+		            			</apex:repeat>
+		                    </tbody>
+						</table>
+					</apex:outputPanel>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            
+            
+            
+            
+            <!-- START SECTION -->
+            <div id="activityHistory" class="section">
+                <h3>Activity History</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <apex:outputPanel layout="none" rendered="{!!HasActivityHistories}">
+           				<div class="row">
+           					<div class="fieldCenter">{!$Label.NoRecordsToDisplay}</div>
+           				</div>
+           			</apex:outputPanel>
+                
+                	<apex:outputPanel layout="none" rendered="{!HasActivityHistories}">
+	                    <table class="list fixed">
+	                        <colgroup>
+	                            <col width="15px"></col>
+	                            <col width=""></col>
+	                            <col width="150px"></col>
+	                            <col width="80px"></col>
+	                            <col width="120px"></col>
+	                            <col width="70px"></col>
+	                        </colgroup>
+	                        <thead>
+	                            <tr>
+	                                <th class="alignCenter">&nbsp;</th>
+	                                <th class="alignLeft">Subject</th>
+	                                <th class="alignLeft">Name</th>
+	                                <th class="alignCenter">Task</th>
+	                                <th class="alignLeft">Due Date</th>
+	                                <th class="alignCenter">&nbsp;</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+		                        <apex:repeat value="{!Account.ActivityHistories}" var="ah">
+			            			<tr>
+			            				<td class="alignCenter status status{!ah.Priority}">&nbsp;</td>
+			            				<td class="alignLeft">{!ah.Subject}</td>
+			            				<td class="alignLeft">{!ah.Who.Name}</td>
+			            				<td class="alignCenter"><apex:outputPanel layout="none" rendered="{!ah.IsTask}"><span class="tick"></span></apex:outputPanel></td>
+			            				<td class="alignLeft"><apex:outputField value="{!ah.ActivityDate}"/></td>
+			            				<td class="alignCenter"><apex:outputPanel layout="none" rendered="{!ah.IsTask}"><span class="link">&nbsp;</span><a href="{!$Page.taskview}?id={!ah.Id}" class="hidden link" onclick="return false;"></a></apex:outputPanel></td>
+			            			</tr>
+		            			</apex:repeat>
+		                    </tbody>
+						</table>
+					</apex:outputPanel>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            
+            
+            
+        </div>
+    </div>
+    
+</apex:page>

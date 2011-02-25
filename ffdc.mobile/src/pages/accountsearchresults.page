@@ -1,0 +1,31 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" controller="ListController">
+
+<table class="list fixed">
+    <colgroup>
+        <col width=""></col>
+        <col width="150px"></col>
+        <col width="170px"></col>
+        <col width="70px"></col>
+    </colgroup>
+    <tbody>
+        <apex:repeat id="accountList" value="{!accounts}" var="a" rows="250">
+        <tr>
+            <td class="alignLeft">{!a.Name}</td>
+            <td class="alignLeft">{!a.BillingCity}</td>
+            <td class="alignLeft">{!a.Phone}</td>
+            <td class="alignCenter"><span class="link"></span><a href="{!$Page.accountview}?id={!a.Id}" class="link hidden" onclick="return false;"></a></td>
+        </tr>
+        </apex:repeat>
+        <apex:outputPanel layout="none" rendered="{!IF(size == 0, true, false)}">
+        <tr>
+            <td colspan="4" class="alignCenter">{!$Label.SearchResultsNone}</td>
+        </tr>
+        </apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{!IF(size > 250, true, false)}">
+        <tr>
+            <td colspan="4" class="alignCenter">{!$Label.SearchResultsTooMany}</td>
+        </tr>
+        </apex:outputPanel>
+    </tbody>
+</table>
+</apex:page>

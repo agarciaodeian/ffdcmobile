@@ -1,0 +1,109 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" standardController="Opportunity" extensions="OpportunityController">
+    <apex:form onsubmit="buttonLoadingOn($('#btnSave'));createOverlay(true);" styleClass="vBox stretchBox">
+    <h2>
+        <span class="button left" onclick="scrollToSecond();">
+            <span class="left"></span>
+            <span class="right">Cancel</span>
+        </span>
+        <span id="btnSave" class="button right" onclick="saveOpportunity();$('#btnSaveTxt').html('Saving');">
+            <span class="left"></span>
+            <span class="right" id="btnSaveTxt">Save</span>
+        </span>
+        <span class="title">Opportunity</span> Edit
+    </h2>
+    <div class="content stretchBox" style="position:relative;">
+        <div id="editScroller">
+        	
+            <apex:actionFunction action="{!save}" name="saveOpportunity" rerender="opportunityContent" oncomplete="if($('.errorMessages').length<1){loadViewWithUrl('{!$Page.opportunityview}?id={!Opportunity.Id}');}else{buttonLoadingOff();$('#btnSaveTxt').html('Save');editScroll.scrollTo(0, 0, 0);removeOverlay();}" onbeforedomupdate=""/>
+            <apex:outputPanel layout="block" id="opportunityContent">
+            
+            <div class="errorMessagesWrapper">
+                <apex:messages styleClass="errorMessages"/>
+            </div>
+            
+            <!-- START SECTION -->
+            <div id="accountDetailEdit" class="section first">
+                <h3>Opportunity Detail</h3>
+                <div class="headerArrow"></div>
+            
+                <!-- Start Fields -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Opportunity Name</div>
+                        <div class="field">{!Opportunity.Name}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Account Name</div>
+                        <div class="field">{!Opportunity.Account.Name}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Type</div>
+                        <div class="field">{!Opportunity.Type}</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Close Date</div>
+                        <div class="field"><apex:outputField value="{!Opportunity.CloseDate}"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Stage</div>
+                        <div class="field">
+                        	<apex:inputField value="{!Opportunity.StageName}"/>   
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Probability</div>
+                        <div class="field"><apex:outputField value="{!Opportunity.Probability}"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Amount</div>
+                        <div class="field"><apex:outputField value="{!Opportunity.Amount}"/></div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="additionalInformationEdit" class="section">
+                <h3>Additional Information</h3>
+                <div class="headerArrow"></div>
+                <!-- Start Fields -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Lead Source</div>
+                        <div class="field"><apex:inputField value="{!Opportunity.LeadSource}"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Next Step</div>
+                        <div class="field"><apex:inputField value="{!Opportunity.NextStep}" onkeydown="if(event.keyCode==13){this.blur();saveOpportunity();return false;}"/></div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="descriptionEdit" class="section">
+                <h3>Description</h3>
+                <div class="headerArrow"></div>
+                <!-- Start Fields -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Description</div>
+                        <div class="field"><apex:inputField value="{!Opportunity.Description}"/></div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>
+            <!-- END SECTION -->
+            
+            
+            
+            
+            
+            </apex:outputPanel>
+           
+        </div>
+    </div>
+     </apex:form>
+</apex:page>

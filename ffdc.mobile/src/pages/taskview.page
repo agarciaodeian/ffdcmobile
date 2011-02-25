@@ -1,0 +1,136 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" standardController="task" extensions="TaskController">
+    <h2>
+	    <span class="button back left" onclick="scrollToFirst();">
+	        <span class="left"></span>
+	        <span class="right">List</span>
+	    </span>
+	    <span class="button right" onclick="buttonLoadingOn(this);createOverlay();loadEdit('{!$Page.taskEdit}?id={!Task.Id}');">
+	        <span class="left"></span>
+	        <span class="right">Edit</span>
+	    </span>
+	    <span class="title">Task</span> View
+    </h2>
+    <div class="content stretchBox" style="position:relative;">
+        <div id="viewScroller">
+            <!-- START SECTION -->
+            <div id="taskDetail" class="section first">
+                <h3>Task Detail</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Subject</div>
+                        <div class="field">
+                        	{!Task.Subject}
+						</div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Status</div>
+                        <div class="field">
+                        	{!Task.Status}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Due Date</div>
+                        <div class="field">
+                        	<apex:outputField value="{!Task.ActivityDate}"/>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="label">Name</div>
+                        <div class="field">{!Task.Who.Name}</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="label">Phone</div>
+                        <div class="field">{!Phone}</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="label">Email</div>
+                        <div class="field">{!Email}</div>
+                    </div>
+                     
+					<div class="row">
+                        <div class="label">Related To</div>
+                        
+                        <apex:outputPanel layout="none" rendered="{!IsRelatedToAccount}">
+                        	<div class="field fieldLink">
+                        		<span class="data">{!Task.What.Name}</span> 
+                        		<span class="link"></span>
+                        		<a href="{!$Page.accountview}?id={!Task.What.Id}" class="hidden link" onclick="return false;"></a>
+                        	</div>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel layout="none" rendered="{!IsRelatedToOpportunity}">
+                        	<div class="field fieldLink">
+                        		<span class="data">{!Task.What.Name}</span> 
+                        		<span class="link"></span>
+                        		<a href="{!$Page.opportunityview}?id={!Task.What.Id}" class="hidden link" onclick="return false;"></a>
+                        	</div>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel layout="none" rendered="{!IsRelatedToSalesInvoice}">
+                        	<div class="field fieldLink">
+                        		<span class="data">{!Task.What.Name}</span> 
+                        		<span class="link"></span>
+                        		<a href="{!$Page.invoiceview}?id={!Task.What.Id}" class="hidden link" onclick="return false;"></a>
+                        	</div>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel layout="none" rendered="{!IsRelatedToUnsupported}">
+                        	<div class="field">{!Task.What.Name}</div>
+                        </apex:outputPanel>
+                        
+                        
+                        
+                    </div>
+                    
+                    <div class="row">
+                        <div class="label">Priority</div>
+                        <div class="field"><span class="priority{!Task.Priority}">{!Task.Priority}</span></div>
+                    </div>
+                    
+                    
+                     
+                     
+                </div>
+                <!-- END FIELDS -->
+            </div>  
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="descriptionInformation" class="section first">
+                <h3>Description Information</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Comments</div>
+                        <div class="field"><apex:outputField value="{!Task.Description}"/></div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>  
+            <!-- END SECTION -->
+            
+            
+            <!-- START SECTION -->
+            <div id="reminder" class="section first">
+                <h3>Reminder</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Reminder</div>
+                        <div class="field">
+	                        <apex:outputField value="{!Task.ReminderDateTime}"/>
+                        </div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>  
+            <!-- END SECTION -->
+        </div>
+    </div>
+</apex:page>

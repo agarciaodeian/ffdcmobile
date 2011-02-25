@@ -1,0 +1,73 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" expires="0" cache="false">
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <title>{!$Label.ApplicationName}</title>
+        <link rel="stylesheet" media="all" href="{!URLFOR($Resource.frontMobile,'frontMobile/base/ipad_landscape.css')}" type="text/css"/>
+        <link rel="stylesheet" media="all and (orientation:portrait)" href="{!URLFOR($Resource.frontMobile,'frontMobile/base/ipad_portrait.css')}" type="text/css"/>
+        <script src="{!URLFOR($Resource.frontMobile,'frontMobile/base/frameworks/jquery-1.4.2.min.js')}" type="text/javascript"></script>
+        <script src="{!URLFOR($Resource.frontMobile,'frontMobile/base/frameworks/iscroll-3.7.1-altered.js')}" type="text/javascript"></script>
+        <script src="{!URLFOR($Resource.frontMobile,'frontMobile/base/base.js')}" type="text/javascript"></script>
+        <script src="/faces/a4j/g/3_3_3.Finalorg.ajax4jsf.javascript.AjaxScript" type="text/javascript"></script>
+        <script src="/static/060710/js/functions.js" type="text/javascript"></script>
+        <script src="/jslibrary/1286160929000/main.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div id="PL"></div>
+        <div id="page" class="vBox stretchBox">
+            <h1>
+                <span id="navButtonPort" class="button">
+                    <span class="left">&nbsp;</span>
+                    <span class="right">{!$Label.NavigationRoot}</span>
+                </span>
+                <span class="logo"></span>
+            </h1>
+            <div id="app" class="hBox stretchBox bg">
+                <!-- START FRAME -->
+                <div id="sideFrame" class="vBox frame">
+                	<h2 class="main">{!$Label.NavigationRoot}</h2>
+                    <div class="stretchBox" style="position:relative">
+                        <div id="sideScroller" class="stretchBox">
+                            <div class="navigationSection"> 
+                                <h2 class="white">{!$Label.Objects}</h2>
+                                <div class="content">
+                                    <ul class="navigationList">
+                                        <li><span onclick="loadPage('{!$Page.tasksearch}',this);" class="link">{!$Label.ObjectTasks}</span><span class="indicator">&nbsp;</span></li>
+                                        <li><span onclick="loadPage('{!$Page.accountsearch}',this);" class="link">{!$Label.ObjectAccounts}</span><span class="indicator">&nbsp;</span></li>
+                                        <li><span onclick="loadPage('{!$Page.opportunitysearch}',this);" class="link">{!$Label.ObjectOpportunities}</span><span class="indicator">&nbsp;</span></li>
+                                        <li><span onclick="loadPage('{!$Page.invoicesearch}',this);" class="link">{!$Label.ObjectInvoices}</span><span class="indicator">&nbsp;</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div style="height:20px;">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END FRAME -->
+                
+                <!-- START FRAME -->
+                <div class="vBox stretchBox">
+                    <div id="mainFrame" class="stretchBox vBox" style="overflow:hidden;position:relative;">
+                        <div id="movingbox" class="stretchBox" style="left:0px;width:2304px;-webkit-transform: translate3d(0px, 0px, 0px);-webkit-transition:-webkit-transform 0.5s;-webkit-perspective: 1500;">
+                        <!--<div id="movingbox" class="stretchBox" style="left:0px;width:2320px;">-->
+                            
+                            <div id="box1" class="vBox frame box" >
+                                <div class="welcome">
+                                    <img src="{!URLFOR($Resource.frontMobile,'frontMobile/base/images/welcome_image.png')}" alt=""/>
+                                    <h3>{!$Label.WelcomeTitle}</h3>
+                                    <h4>{!$Label.WelcomeSubTitle}</h4>
+                                    <h5>{!$Label.WelcomeVersion}</h5>
+                                </div>
+                            </div>
+                            <div id="box2" class="vBox frame box" style="left:768px;"></div>
+                            <div id="box3" class="vBox frame box" style="left:1536px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END FRAME -->
+            </div>
+        </div>
+    </body>
+</html>
+</apex:page>

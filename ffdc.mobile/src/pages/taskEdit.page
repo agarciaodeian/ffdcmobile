@@ -1,0 +1,119 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" standardController="task" extensions="TaskController">
+    <apex:form onsubmit="buttonLoadingOn($('#btnSave'));createOverlay(true);" styleClass="vBox stretchBox">
+    <h2>
+        <span class="button left" onclick="scrollToSecond();">
+            <span class="left"></span>
+            <span class="right">Cancel</span>
+        </span>
+        <span id="btnSave" class="button right" onclick="saveTask();$('#btnSaveTxt').html('Saving');">
+            <span class="left"></span>
+            <span class="right" id="btnSaveTxt">Save</span>
+        </span>
+        <span class="title">Task</span> Edit
+    </h2>
+    <div class="content stretchBox" style="position:relative">
+        <div id="editScroller">
+            
+            <apex:actionFunction action="{!save}" name="saveTask" rerender="taskContent" oncomplete="if($('.errorMessages').length<1){loadViewWithUrl('{!$Page.taskview}?id={!Task.Id}');}else{buttonLoadingOff();$('#btnSaveTxt').html('Save');editScroll.scrollTo(0, 0, 0);removeOverlay();}" onbeforedomupdate=""/>
+            <apex:outputPanel layout="block" id="taskContent">
+
+            <div class="errorMessagesWrapper">
+                <apex:messages styleClass="errorMessages"/>
+            </div>
+            
+            <!-- START SECTION -->
+            <div id="taskDetailEdit" class="section">
+                <h3>Task Detail</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Subject</div>
+                        <div class="field">
+                            <apex:inputField value="{!Task.Subject}" onkeydown="if(event.keyCode==13){this.blur();saveTask();return false;}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Status</div>
+                        <div class="field">
+                            <apex:inputField value="{!Task.Status}"/>   
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="label">Due Date</div>
+                        <div class="field">
+                            <apex:outputField value="{!Task.ActivityDate}"/>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="label">Name</div>
+                        <div class="field">{!Task.Who.Name}</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="label">Phone</div>
+                        <div class="field">{!Phone}</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="label">Email</div>
+                        <div class="field">{!Email}</div>
+                    </div>
+                     
+                    <div class="row">
+                        <div class="label">Related To</div>
+                        <div class="field">{!Task.What.Name}</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="label">Priority</div>
+                        <div class="field">
+                            <apex:inputField value="{!Task.Priority}"/>
+                        </div>
+                    </div>
+                     
+                </div>
+                <!-- END FIELDS -->
+            </div>  
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="descriptionInformationEdit" class="section">
+                <h3>Description Information</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Comments</div>
+                        <div class="field">
+                        	<apex:inputField value="{!Task.Description}"/>
+                        </div>
+                    </div>
+                </div>
+                <!-- END FIELDS -->
+            </div>  
+            <!-- END SECTION -->
+            
+            <!-- START SECTION -->
+            <div id="reminderEdit" class="section">
+                <h3>Reminder</h3>
+                <div class="headerArrow"></div>
+                <!-- START FIELDS -->
+                <div class="fields">
+                    <div class="row">
+                        <div class="label">Reminder</div>
+                        <div class="field">
+                        	<apex:outputField value="{!Task.ReminderDateTime}"/>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- END FIELDS -->
+            </div>  
+            <!-- END SECTION -->
+            </apex:outputPanel>
+            
+        </div>
+    </div>
+    </apex:form>
+</apex:page>
